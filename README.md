@@ -6,9 +6,7 @@ This repository demonstrates [Node.js ES modules and top-level await in AWS Lamb
 
 We use [serverless-esbuild](https://github.com/floydspace/serverless-esbuild) to transpile our TypeScript code to JavaScript.
 
-The secret sauce is to configure esbuild to output Node.js ES modules files with `.mjs` extension.
-
-The combine of the following esbuild options:
+The secret sauce is to configure esbuild to output Node.js ES modules files with `.mjs` extension with the following esbuild options:
 
 ```yaml
 format: "esm"
