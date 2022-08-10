@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "@aws-sdk/client-ssm": "3.142.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.102",
+    "esbuild": "0.14.53",
+    "prettier": "2.7.1",
+    "serverless": "3.21.0",
+    "serverless-esbuild": "1.32.5",
+    "serverless-iam-roles-per-function": "3.2.0"
+  },
+  "prettier": {
+    "printWidth": 120
+  }
+}

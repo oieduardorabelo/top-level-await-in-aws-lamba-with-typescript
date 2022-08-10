@@ -1,0 +1,14 @@
+# https://github.com/evanw/esbuild/issues/1921#issuecomment-1152887672
+bundle: true
+concurrency: ${self:custom.config.esbuild.concurrency}
+exclude: ["aws-sdk"]
+format: "esm"
+keepNames: ${self:custom.config.esbuild.keepNames}
+minify: ${self:custom.config.esbuild.minify}
+outputFileExtension: ".mjs"
+packager: "pnpm"
+platform: "node"
+sourcemap: ${self:custom.config.esbuild.sourcemap}
+target: "esnext"
+banner:
+  js: import { createRequire } from 'module';const require = createRequire(import.meta.url);

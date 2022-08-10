@@ -1,0 +1,68 @@
+service: "sls-ts-esm"
+
+configValidationMode: "error"
+deprecationNotificationMode: "error"
+frameworkVersion: "3"
+useDotenv: true
+
+plugins:
+  - serverless-esbuild
+  - serverless-iam-roles-per-function
+
+custom:
+  config: ${file(./config/env.yaml):config}
+  esbuild: ${file(./config/esbuild.yaml)}
+
+provider:
+  name: ${self:custom.config.provider.name}
+  stage: ${self:custom.config.provider.stage}
+  region: ${self:custom.config.provider.region}
+  tags: ${self:custom.config.tags}
+  stackTags: ${self:custom.config.tags}
+  deploymentMethod: direct
+  disableRollback: ${self:custom.config.provider.disableRollback}
+  versionFunctions: ${self:custom.config.provider.versionFunctions}
+  ##### AWS API Gateway configurations
+  endpointType: REGIONAL
+  apiGateway:
+    minimumCompressionSize: 1024
+    shouldStartNameWithService: true
+  ##### Configurations shared by all AWS Lambda functions
+  runtime: "nodejs16.x"
+  memorySize: 1024
+  timeout: 30
+  architecture: arm64
+  logRetentionInDays: 1
+  ##### Environment variables shared by all AWS Lambda functions
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+    NODE_OPTIONS: ${self:custom.config.environment.NODE_OPTIONS}
+
+functions:
+  me:
+    handler: app/functions/me.handler
+    environment:
+      SSM_CONFIG_CLIENT:
+        Ref: SSMConfigClient
+    iamRoleStatements:
+      - Effect: "Allow"
+        Action:
+          - ssm:GetParameter
+        Resource:
+          Fn::Sub:
+            [
+              "arn:aws:ssm:${region}:${awsAccoutId}:parameter${paramName}",
+              {
+                paramName: !Ref SSMConfigClient,
+                region: "${self:custom.config.provider.region}",
+                awsAccoutId: "${self:custom.config.awsAccoutId}",
+              },
+            ]
+    events:
+      - http:
+          path: me
+          method: get
+          cors: true
+
+resources:
+  - ${file(./app/resources/ssm.yaml)}

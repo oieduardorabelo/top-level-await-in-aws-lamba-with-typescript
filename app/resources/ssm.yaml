@@ -1,0 +1,10 @@
+Resources:
+  SSMConfigClient:
+    Type: AWS::SSM::Parameter
+    Properties:
+      DataType: text
+      Description: "Config for client environment"
+      Name: "/config/${opt:stage}/client"
+      Type: String
+      Value: "my-config-client"
+      Tags: ${self:custom.config.tags}
