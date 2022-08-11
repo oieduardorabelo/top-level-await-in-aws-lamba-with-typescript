@@ -1,5 +1,13 @@
 # 🚀 Top-level await in AWS Lamba with TypeScript
 
+### Articles
+
+- https://dev.to/oieduardorabelo/top-level-await-in-aws-lamba-with-typescript-1bf0
+- https://medium.com/@oieduardorabelo/top-level-await-in-aws-lamba-with-typescript-aeba95b5abc1
+- https://oieduardorabelo.hashnode.dev/top-level-await-in-aws-lamba-with-typescript
+
+### Summary
+
 This repository demonstrates [Node.js ES modules and top-level await in AWS Lambda](https://aws.amazon.com/blogs/compute/using-node-js-es-modules-and-top-level-await-in-aws-lambda/) while developing your code in TypeScript.
 
 ### How does that work?
